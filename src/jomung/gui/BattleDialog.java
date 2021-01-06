@@ -11,8 +11,8 @@ import javax.swing.SpringLayout;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import jomung.Map;
 import jomung.Room;
+import jomung.movingobject.Player;
 
 public class BattleDialog extends JDialog {
 
@@ -20,6 +20,7 @@ public class BattleDialog extends JDialog {
 	private WarPanel warPanel;
 	private WeaponPanel weaponPanel;
 	private SpringLayout sl_contentPane;
+	private Player player;
 	private int x;
 	private int y;
 	private String weaponName;
@@ -31,10 +32,11 @@ public class BattleDialog extends JDialog {
 		setLayout(sl_contentPane);
 		addWindowListener(new Ender());
 
-		x = MainFrame.getInstance().getPlayer().getCurrentLocationX();
-		y = MainFrame.getInstance().getPlayer().getCurrentLocationY();
+		player = MainFrame.getInstance().getPlayer();
+		x = player.getCurrentLocationX();
+		y = player.getCurrentLocationY();
 
-		warPanel = new WarPanel(Map.getInstance().getRooms()[x][y], this);
+		warPanel = new WarPanel(player.getMap().getRooms()[x][y], this);
 		sl_contentPane.putConstraint(SpringLayout.NORTH, warPanel, 0,
 				SpringLayout.NORTH, this);
 		sl_contentPane.putConstraint(SpringLayout.WEST, warPanel, 0,
@@ -71,9 +73,9 @@ public class BattleDialog extends JDialog {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent event) {
 			BattleDialog.this.remove(warPanel);
-			warPanel = new WarPanel(Map.getInstance().getRooms()[x][y],
+			warPanel = new WarPanel(player.getMap().getRooms()[x][y],
 					BattleDialog.this);
 			sl_contentPane.putConstraint(SpringLayout.NORTH, warPanel, 0,
 					SpringLayout.NORTH, BattleDialog.this);
@@ -107,8 +109,8 @@ public class BattleDialog extends JDialog {
 
 		@Override
 		public void windowClosing(WindowEvent event) {
-			MainFrame.getInstance().getPlayer().autoWar();
-			Room room = Map.getInstance().getRoomAt(x, y);
+			player.autoWar();
+			Room room = player.getMap().getRoomAt(x, y);
 			for (int i = 0; i < room.getEnemiesList().size(); i++) {
 				MainFrame.getInstance().getPlayer().costHealth();
 			}

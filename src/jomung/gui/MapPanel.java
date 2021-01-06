@@ -6,13 +6,14 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-import jomung.Map;
+import jomung.movingobject.Player;
 import jomung.view.RoomView;
 
 public class MapPanel extends JPanel {
 
 	private static final long serialVersionUID = -7102103171371189068L;
 	private SpringLayout sl_contentPane;
+	private Player player;
 	private JComponent[][] components;
 
 	public MapPanel() {
@@ -20,13 +21,15 @@ public class MapPanel extends JPanel {
 		setLayout(sl_contentPane);
 		setPreferredSize(new Dimension(500, 500));
 
-		int X = Map.getInstance().getMAP_MAX_X();
-		int Y = Map.getInstance().getMAP_MAX_Y();
+		player = MainFrame.getInstance().getPlayer();
+
+		int X = player.getMap().getMAP_MAX_X();
+		int Y = player.getMap().getMAP_MAX_Y();
 		components = new JComponent[X][Y];
 		for (int i = 0; i < X; i++) {
 			for (int j = 0; j < Y; j++) {
 				components[i][j] = RoomView
-						.view(Map.getInstance().getRooms()[i][j]);
+						.view(player.getMap().getRooms()[i][j]);
 			}
 		}
 		for (int i = 0; i < X; i++) {

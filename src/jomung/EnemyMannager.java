@@ -1,6 +1,7 @@
 package jomung;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import jomung.bfs.BFS;
@@ -10,10 +11,12 @@ import jomung.movingobject.Enemy;
 import jomung.movingobject.Player;
 import jomung.res.R;
 
-public class EnemyMannager extends Thread {
+public class EnemyMannager implements Serializable {
 
+	private static final long serialVersionUID = -6508787029291290188L;
 	private static EnemyMannager instance;
 	private ArrayList<Enemy> enemies;
+	private int index = 0;
 
 	public static EnemyMannager getInstance() {
 		if (instance == null) {
@@ -22,31 +25,28 @@ public class EnemyMannager extends Thread {
 		return instance;
 	}
 
-	private EnemyMannager() {
-		enemies = new ArrayList<>();
+	public static void setInstance(EnemyMannager newInstance) {
+		instance = newInstance;
 	}
 
-	@Override
+	private EnemyMannager() {
+		enemies = new ArrayList<>();
+		BFS.MAX_X = R.getInstance().getX();
+		BFS.MAX_Y = R.getInstance().getY();
+	}
+
 	public void run() {
-		while (true) {
-			for (int i = 0; i < enemies.size(); i++) {
-				enemies.get(i).ready();
-				if (enemies.get(i).isAlive()) {
-					moveEnemiesToPlayer(enemies.get(i));
-				}
-			}
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException exception) {
-				exception.printStackTrace();
-			}
+		enemies.get(index).ready();
+		if (enemies.get(index).isAlive()) {
+			moveEnemiesToPlayer(enemies.get(index));
 		}
+		index = (index + 1) % enemies.size();
 	}
 
 	private void moveEnemiesToPlayer(Enemy enemy) {
 		int x = enemy.getCurrentLocationX();
 		int y = enemy.getCurrentLocationY();
-		Direction direction = null;
+		Direction direction = Direction.UP;
 		int distance = Integer.MAX_VALUE;
 		Player[] players = DataBase.getInstance().getPlayers();
 		for (int i = 0; i < players.length; i++) {
@@ -102,8 +102,7 @@ public class EnemyMannager extends Thread {
 		}
 		try {
 			enemy.move(direction);
-		} catch (IllegalArgumentException exception) {
-
+		} catch (IllegalArgumentException | NullPointerException exception) {
 		}
 	}
 

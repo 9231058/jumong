@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jomung.Item;
-import jomung.Map;
 import jomung.Room;
 import jomung.Weapon;
 import jomung.enums.Direction;
@@ -19,10 +18,10 @@ public class Player extends MovingObject {
 
 	public Player(int x, int y) {
 		super(x, y);
-		Room room = Map.getInstance().getRoomAt(x, y);
+		Room room = map.getRoomAt(x, y);
 		room.addMovingObject(this);
 		this.room = room;
-		Map.getInstance().setRoomAt(x, y, room);
+		map.setRoomAt(x, y, room);
 	}
 
 	@Override
@@ -129,8 +128,8 @@ public class Player extends MovingObject {
 	}
 
 	public boolean isWinner() {
-		if (Map.getInstance().getEndPoint().x == getCurrentLocationX()) {
-			if (Map.getInstance().getEndPoint().y == getCurrentLocationY()) {
+		if (map.getEndPoint().x == getCurrentLocationX()) {
+			if (map.getEndPoint().y == getCurrentLocationY()) {
 				return true;
 			}
 		}

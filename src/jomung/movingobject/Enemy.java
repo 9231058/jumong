@@ -1,7 +1,6 @@
 package jomung.movingobject;
 
 import jomung.EnemyMannager;
-import jomung.Map;
 import jomung.Room;
 
 public class Enemy extends MovingObject {
@@ -10,10 +9,10 @@ public class Enemy extends MovingObject {
 
 	public Enemy(int x, int y) {
 		super(x, y);
-		Room room = Map.getInstance().getRoomAt(x, y);
+		Room room = map.getRoomAt(x, y);
 		room.addMovingObject(this);
 		this.room = room;
-		Map.getInstance().setRoomAt(x, y, room);
+		map.setRoomAt(x, y, room);
 		EnemyMannager.getInstance().addEnemy(this);
 	}
 

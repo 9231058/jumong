@@ -108,7 +108,13 @@ public class PlayerUI2D implements UI {
 			haveNewCommand = false;
 			switch (command) {
 			case KILL_ENEMY:
-				player.useWeapon((String) objects[0], (int) objects[1]);
+				try {
+					player.useWeapon((String) objects[0], (int) objects[1]);
+				} catch (Exception exception) {
+					exception.printStackTrace();
+				}
+				player.setCurrentLocationSeeAble();
+				player.ready();
 				break;
 			case END_WAR:
 				war = false;

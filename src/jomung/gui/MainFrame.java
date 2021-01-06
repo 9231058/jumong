@@ -44,13 +44,12 @@ public class MainFrame extends JFrame {
 		super("J O M U N G");
 
 		key = new MovmentKey();
-
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		contentPane = new JPanel();
 		sl_contentPane = new SpringLayout();
 		contentPane.setLayout(sl_contentPane);
 		setSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.addKeyListener(key);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 		saveButton = new JButton("Save");
 		saveButton.setPreferredSize(new Dimension(200, 50));
@@ -170,29 +169,35 @@ public class MainFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent event) {
-			contentPane.remove(mapPanel);
-			mapPanel = new MapPanel();
-			sl_contentPane.putConstraint(SpringLayout.NORTH, mapPanel, 0,
-					SpringLayout.NORTH, contentPane);
-			sl_contentPane.putConstraint(SpringLayout.WEST, mapPanel, 10,
-					SpringLayout.WEST, contentPane);
-			contentPane.add(mapPanel);
 			if (ui != null) {
-				contentPane.remove(inventoryPanel);
-				inventoryPanel = new InventoryPanel();
-				sl_contentPane.putConstraint(SpringLayout.NORTH,
-						inventoryPanel, 0, SpringLayout.NORTH, contentPane);
-				sl_contentPane.putConstraint(SpringLayout.EAST, inventoryPanel,
-						-10, SpringLayout.EAST, contentPane);
-				contentPane.add(inventoryPanel);
-
-				contentPane.remove(statusPanel);
-				statusPanel = new StatusPanel();
-				sl_contentPane.putConstraint(SpringLayout.NORTH, statusPanel,
-						0, SpringLayout.SOUTH, inventoryPanel);
-				sl_contentPane.putConstraint(SpringLayout.EAST, statusPanel,
-						-10, SpringLayout.EAST, contentPane);
-				contentPane.add(statusPanel);
+				if (mapPanel != null) {
+					contentPane.remove(mapPanel);
+					mapPanel = new MapPanel();
+					sl_contentPane.putConstraint(SpringLayout.NORTH, mapPanel,
+							0, SpringLayout.NORTH, contentPane);
+					sl_contentPane.putConstraint(SpringLayout.WEST, mapPanel,
+							10, SpringLayout.WEST, contentPane);
+					contentPane.add(mapPanel);
+				}
+				if (inventoryPanel != null) {
+					contentPane.remove(inventoryPanel);
+					inventoryPanel = new InventoryPanel();
+					sl_contentPane.putConstraint(SpringLayout.NORTH,
+							inventoryPanel, 0, SpringLayout.NORTH, contentPane);
+					sl_contentPane
+							.putConstraint(SpringLayout.EAST, inventoryPanel,
+									-10, SpringLayout.EAST, contentPane);
+					contentPane.add(inventoryPanel);
+				}
+				if (statusPanel != null) {
+					contentPane.remove(statusPanel);
+					statusPanel = new StatusPanel();
+					sl_contentPane.putConstraint(SpringLayout.NORTH,
+							statusPanel, 0, SpringLayout.SOUTH, inventoryPanel);
+					sl_contentPane.putConstraint(SpringLayout.EAST,
+							statusPanel, -10, SpringLayout.EAST, contentPane);
+					contentPane.add(statusPanel);
+				}
 			}
 			SwingUtilities.updateComponentTreeUI(MainFrame.this);
 			timer.restart();

@@ -1,7 +1,6 @@
 package jomung.items;
 
 import jomung.Item;
-import jomung.Map;
 import jomung.Room;
 import jomung.enums.ItemType;
 import jomung.movingobject.Player;
@@ -23,23 +22,23 @@ public class hawk extends Item {
 		int x = player.getCurrentLocationX();
 		int y = player.getCurrentLocationY();
 		try {
-			Map.getInstance().setRoomSeeable(x + 1, y,
-					Map.getInstance().getRoomAt(x + 1, y));
+			player.getMap().setRoomSeeable(x + 1, y,
+					player.getMap().getRoomAt(x + 1, y));
 		} catch (IllegalArgumentException exception) {
 		}
 		try {
-			Map.getInstance().setRoomSeeable(x - 1, y,
-					Map.getInstance().getRoomAt(x - 1, y));
+			player.getMap().setRoomSeeable(x - 1, y,
+					player.getMap().getRoomAt(x - 1, y));
 		} catch (IllegalArgumentException exception) {
 		}
 		try {
-			Map.getInstance().setRoomSeeable(x, y + 1,
-					Map.getInstance().getRoomAt(x, y + 1));
+			player.getMap().setRoomSeeable(x, y + 1,
+					player.getMap().getRoomAt(x, y + 1));
 		} catch (IllegalArgumentException exception) {
 		}
 		try {
-			Map.getInstance().setRoomSeeable(x, y - 1,
-					Map.getInstance().getRoomAt(x, y - 1));
+			player.getMap().setRoomSeeable(x, y - 1,
+					player.getMap().getRoomAt(x, y - 1));
 		} catch (IllegalArgumentException exception) {
 		}
 	}

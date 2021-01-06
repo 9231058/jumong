@@ -11,6 +11,7 @@ import jomung.gui.MainFrame;
 import jomung.map.MapFactory;
 import jomung.map.XMLMapFactory;
 import jomung.res.R;
+import jomung.sound.SoundPlayer;
 import jomung.system.SysR;
 import jomung.ui.PlayerUI2D;
 import jomung.ui.PlayerUIServer;
@@ -50,14 +51,16 @@ public class GameMannager {
 		}
 		GamePlayServer.getInstance().start();
 		MainFrame.getInstance().setVisible(true);
+		SoundPlayer.getInstance().start();
 	}
 
 	public void load(String path) {
 		SysR.setPath(path);
 		SysR.getInstance().start();
-		Map.setInstance((Map) SysR.getInstance().getObject(Map.class));
 		DataBase.setInstance((DataBase) SysR.getInstance().getObject(
 				DataBase.class));
+		EnemyMannager.setInstance((EnemyMannager) SysR.getInstance().getObject(
+				EnemyMannager.class));
 		DataBase.getInstance().start();
 		pieces = new ArrayList<>();
 		for (int i = 0; i < DataBase.getInstance().getPlayers().length; i++) {
@@ -69,8 +72,9 @@ public class GameMannager {
 
 	public void save(String path) {
 		SysR.setPath(path);
-		SysR.getInstance().addObject(Map.getInstance(), Map.class);
 		SysR.getInstance().addObject(DataBase.getInstance(), DataBase.class);
+		SysR.getInstance().addObject(EnemyMannager.getInstance(),
+				EnemyMannager.class);
 		SysR.getInstance().finish();
 	}
 
@@ -97,7 +101,6 @@ public class GameMannager {
 
 	public void client(String IP) {
 		GamePlayClient.getInstance().setIP(IP);
-		Map.setIP(IP);
 		GamePlayClient.getInstance().start();
 		MainFrame.getInstance().setVisible(true);
 	}

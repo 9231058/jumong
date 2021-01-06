@@ -1,14 +1,10 @@
 package jomung.gui;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -45,13 +41,9 @@ public class WarPanel extends JPanel {
 	private class WeaponUser implements MouseListener {
 
 		private int index;
-		private Cursor cursor;
 
 		public WeaponUser(int index) {
 			this.index = index;
-			cursor = Toolkit.getDefaultToolkit().createCustomCursor(
-					new ImageIcon("icons/reticule.png").getImage(),
-					new Point(0, 0), "Kill");
 		}
 
 		@Override
@@ -60,17 +52,10 @@ public class WarPanel extends JPanel {
 
 		@Override
 		public void mouseEntered(MouseEvent event) {
-			String weaponName = dialog.getWeapon();
-			if (weaponName == null) {
-				return;
-			} else {
-				setCursor(cursor);
-			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent event) {
-			setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
 
 		@Override

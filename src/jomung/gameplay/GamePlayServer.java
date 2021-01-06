@@ -2,6 +2,7 @@ package jomung.gameplay;
 
 import java.util.List;
 
+import jomung.EnemyMannager;
 import jomung.GameMannager;
 import jomung.ui.UI;
 
@@ -27,6 +28,7 @@ public class GamePlayServer extends Thread {
 			for (int i = 0; i < pieces.size(); i++) {
 				pieces.get(i).nextTurn();
 			}
+			EnemyMannager.getInstance().run();
 		}
 	}
 

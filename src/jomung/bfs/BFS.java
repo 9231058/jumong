@@ -3,16 +3,15 @@ package jomung.bfs;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import jomung.Map;
 import jomung.database.DataBase;
 
 public final class BFS {
 
 	private static int INF = Integer.MAX_VALUE;
+	public static int MAX_X;
+	public static int MAX_Y;
 
 	public static int doBFS(Point startPoint, Point endPoint) {
-		int MAX_X = Map.getInstance().getMAP_MAX_X();
-		int MAX_Y = Map.getInstance().getMAP_MAX_Y();
 		int colors[][] = new int[MAX_X][MAX_Y];
 		int distance[][] = new int[MAX_X][MAX_Y];
 		for (int i = 0; i < MAX_X; i++) {

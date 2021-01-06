@@ -15,15 +15,16 @@ public abstract class MovingObject implements Serializable {
 	protected Room room;
 	protected int health = 100;
 	protected final UUID id;
+	protected Map map;
 
 	public MovingObject(int x, int y) {
 		id = UUID.randomUUID();
 		currentLocation = new Point(x, y);
+		map = new Map();
 	}
 
 	public void ready() {
-		room = Map.getInstance().getRoomAt(getCurrentLocationX(),
-				getCurrentLocationY());
+		room = map.getRoomAt(getCurrentLocationX(), getCurrentLocationY());
 		for (int i = 0; i < room.getPlayersList().size(); i++) {
 			if (this.equals(room.getPlayersList().get(i))) {
 				health = room.getPlayersList().get(i).health;
@@ -57,8 +58,7 @@ public abstract class MovingObject implements Serializable {
 	}
 
 	public void setCurrentLocationSeeAble() {
-		Map.getInstance().setRoomSeeable(currentLocation.x, currentLocation.y,
-				room);
+		map.setRoomSeeable(currentLocation.x, currentLocation.y, room);
 	}
 
 	public boolean isAlive() {
@@ -73,7 +73,7 @@ public abstract class MovingObject implements Serializable {
 	public void move(Direction direction) {
 		Point newPoint = new Point(currentLocation.x + direction.x,
 				currentLocation.y + direction.y);
-		room = Map.getInstance().moveObject(currentLocation, newPoint, this);
+		room = map.moveObject(currentLocation, newPoint, this);
 		currentLocation = newPoint;
 	}
 
@@ -89,6 +89,14 @@ public abstract class MovingObject implements Serializable {
 		return health;
 	}
 
+	public Map getMap() {
+		return map;
+	}
+
+	public void setIP(String IP) {
+		map.setIP(IP);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (!(object instanceof MovingObject)) {
@@ -101,13 +109,8 @@ public abstract class MovingObject implements Serializable {
 		return false;
 	}
 
-	protected void save() {
-		Map.getInstance().moveObject(currentLocation, currentLocation, this);
-	}
-
 	protected void setLocation(int x, int y) {
-		room = Map.getInstance().moveObject(currentLocation, new Point(x, y),
-				this);
+		room = map.moveObject(currentLocation, new Point(x, y), this);
 		currentLocation.setLocation(x, y);
 	}
 
@@ -117,7 +120,7 @@ public abstract class MovingObject implements Serializable {
 			room.removeMovingObject(this);
 			room.addMovingObject(this);
 		}
-		Map.getInstance().setRoomAt(currentLocation.x, currentLocation.y, room);
+		map.setRoomAt(currentLocation.x, currentLocation.y, room);
 	}
 
 	abstract public void costHealth();

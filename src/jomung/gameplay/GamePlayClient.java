@@ -36,7 +36,9 @@ public class GamePlayClient extends Thread {
 			ostream = new ObjectOutputStream(socket.getOutputStream());
 			ostream.flush();
 			istream = new ObjectInputStream(socket.getInputStream());
-			piece = new PlayerUI2D((Player) istream.readObject(), true);
+			Player player = (Player) istream.readObject();
+			player.setIP(IP);
+			piece = new PlayerUI2D(player, true);
 			while (!gameOver && !win) {
 				String request = istream.readUTF();
 				if (request.equalsIgnoreCase("NEXTTURN")) {

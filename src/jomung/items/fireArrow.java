@@ -1,7 +1,6 @@
 package jomung.items;
 
 import jomung.Item;
-import jomung.Map;
 import jomung.Room;
 import jomung.Weapon;
 import jomung.enums.ItemType;
@@ -28,34 +27,34 @@ public class fireArrow extends Item implements Weapon {
 		int y = player.getCurrentLocationY();
 		Room room;
 		try {
-			room = Map.getInstance().getRoomAt(x + 1, y);
+			room = player.getMap().getRoomAt(x + 1, y);
 			room.setWall(false);
-			Map.getInstance().setRoomAt(x + 1, y, room);
-			Map.getInstance().setRoomSeeable(x + 1, y, room);
+			player.getMap().setRoomAt(x + 1, y, room);
+			player.getMap().setRoomSeeable(x + 1, y, room);
 		} catch (IllegalArgumentException exception) {
 
 		}
 		try {
-			room = Map.getInstance().getRoomAt(x - 1, y);
+			room = player.getMap().getRoomAt(x - 1, y);
 			room.setWall(false);
-			Map.getInstance().setRoomAt(x - 1, y, room);
-			Map.getInstance().setRoomSeeable(x - 1, y, room);
+			player.getMap().setRoomAt(x - 1, y, room);
+			player.getMap().setRoomSeeable(x - 1, y, room);
 		} catch (IllegalArgumentException exception) {
 
 		}
 		try {
-			room = Map.getInstance().getRoomAt(x, y + 1);
+			room = player.getMap().getRoomAt(x, y + 1);
 			room.setWall(false);
-			Map.getInstance().setRoomAt(x, y + 1, room);
-			Map.getInstance().setRoomSeeable(x, y + 1, room);
+			player.getMap().setRoomAt(x, y + 1, room);
+			player.getMap().setRoomSeeable(x, y + 1, room);
 		} catch (IllegalArgumentException exception) {
 
 		}
 		try {
-			room = Map.getInstance().getRoomAt(x, y - 1);
+			room = player.getMap().getRoomAt(x, y - 1);
 			room.setWall(false);
-			Map.getInstance().setRoomAt(x, y - 1, room);
-			Map.getInstance().setRoomSeeable(x, y - 1, room);
+			player.getMap().setRoomAt(x, y - 1, room);
+			player.getMap().setRoomSeeable(x, y - 1, room);
 		} catch (IllegalArgumentException exception) {
 
 		}

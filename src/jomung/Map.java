@@ -14,27 +14,14 @@ import jomung.movingobject.MovingObject;
 
 public class Map implements Serializable {
 	private static final long serialVersionUID = 3655351311889103698L;
-	private static Map instance = null;
-	private static String IP = "127.0.0.1";
+	private String IP = "127.0.0.1";
 	private Point endPoint = null;
 	private int MAP_MAX_X;
 	private int MAP_MAX_Y;
 	private Room[][] rooms;
 
-	public static Map getInstance() {
-		if (instance == null) {
-			instance = new Map();
-		}
-		return instance;
-
-	}
-
-	public static void setIP(String newIP) {
-		IP = newIP;
-	}
-
-	public static void setInstance(Map newInstance) {
-		instance = newInstance;
+	public void setIP(String IP) {
+		this.IP = IP;
 	}
 
 	@SuppressWarnings("unused")
